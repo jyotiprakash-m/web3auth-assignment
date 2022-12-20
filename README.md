@@ -18,7 +18,7 @@ $ npm install
 > STEP:3 SignUp / Login to [web3auth.io](https://dashboard.web3auth.io/) and Create a project
 
 
-> Node : For local development and integration create a project on testnet environment . For production create another project with same name on mainnet environment . Make sure you whitelist the url of production build (required) 
+>> Note : For local development and integration create a project on testnet environment . For production create another project with same name on mainnet environment . Make sure you whitelist the url of production build (required) 
 
 
 > STEP:4 Create .env.local file in the root folder and provide the clientId of web3auth and mongodb connection url as below
