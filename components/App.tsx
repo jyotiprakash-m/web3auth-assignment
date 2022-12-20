@@ -75,7 +75,7 @@ const App = () => {
                     chainConfig: { // this is ethereum chain config, change if other chain(Solana, Polygon)
                         chainNamespace: CHAIN_NAMESPACES.EIP155,
                         chainId: "0x1",
-                        rpcTarget: "https://rpc.ankr.com/eth",
+                        rpcTarget: rpcTarget,
                     },
                 });
                 setWeb3auth(web3auth);
