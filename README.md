@@ -22,6 +22,7 @@ $ npm install
 ```sh
 MONGO_URI="***"
 NEXT_PUBLIC_CLIENT_ID="**"
+NEXT_PUBLIC_RPC_TARGET ="https://rpc.ankr.com/eth"
 
 ```
 
