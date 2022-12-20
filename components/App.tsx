@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { Row, Col, Typography, Button, Spin, Card, Modal, Form, Input } from 'antd';
 const { Title, Text } = Typography;
 import Image from 'next/image';
-const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID ? process.env.NEXT_PUBLIC_CLIENT_ID : "";
 import axios from 'axios';
 type LoggedInUserInfo = {
     name: string | undefined;
