@@ -7,7 +7,7 @@ import Head from 'next/head';
 import { Row, Col, Typography, Button, Spin, Card, Modal, Form, Input } from 'antd';
 const { Title, Text } = Typography;
 import Image from 'next/image';
-const clientId = "BNvCATPUwKDsAGopCsSKnHFjWad506YEtF2a6E7W4LOOPvAC9eMHtgNbNuhpuV1ZKOY6gH--Kl-0gRmJqiKfEdk";
+const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
 import axios from 'axios';
 type LoggedInUserInfo = {
     name: string | undefined;
@@ -49,7 +49,7 @@ const App = () => {
         setIsModalOpen(false);
     };
     const onFinish = (values: any) => {
-        axios.post("http://localhost:3000/api/user/register", values).then(response => {
+        axios.post("/api/user/register", values).then(response => {
             console.log(response.data);
         }).then(() => {
             axios.get(`/api/user/email/${loggedInUserInfo?.email}`)
@@ -169,143 +169,142 @@ const App = () => {
 
 
 
-    const LoggedInView = () => {
-        return (
-            <>
-                {/* Nav bar */}
-                <Row style={{ padding: "1rem", backgroundColor: "#8b9bf7" }}>
-                    <Col xs={12} xl={12}>
-                        <Text strong style={{ fontSize: 20, color: "#f5f6ff" }} >{loggedInUserInfo?.name}</Text>
-                    </Col>
-                    <Col xs={12} xl={12}>
-                        <Button onClick={logout} type="dashed" style={{ float: "right", fontWeight: 500, color: "#031788" }}>
-                            Logout
-                        </Button>
+    const loggedInView = (
+        <>
+            {/* Nav bar */}
+            <Row style={{ padding: "1rem", backgroundColor: "#8b9bf7" }}>
+                <Col xs={12} xl={12}>
+                    <Text strong style={{ fontSize: 20, color: "#f5f6ff" }} >{loggedInUserInfo?.name}</Text>
+                </Col>
+                <Col xs={12} xl={12}>
+                    <Button onClick={logout} type="dashed" style={{ float: "right", fontWeight: 500, color: "#031788" }}>
+                        Logout
+                    </Button>
+                </Col>
+            </Row>
+
+            {/* Cards */}
+            <Row gutter={[16, 16]} style={{ padding: "1rem" }}>
+                <Col xs={24} md={12} xl={6}>
+                    <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Email Address" >
+                        <Text >
+                            {loggedInUserInfo?.email}
+                        </Text>
+                    </Card>
+                </Col>
+                <Col xs={24} md={12} xl={6}>
+                    <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Chain Id" >
+                        <Text >
+                            {loggedInUserInfo?.chainId}
+                        </Text>
+                    </Card>
+                </Col>
+                <Col xs={24} md={12} xl={6}>
+                    <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Address" >
+                        <Text >
+                            {loggedInUserInfo?.address}
+                        </Text>
+                    </Card>
+                </Col>
+                <Col xs={24} md={12} xl={6}>
+                    <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Private key" >
+                        <Text >
+                            {loggedInUserInfo?.privateKey}
+                        </Text>
+                    </Card>
+                </Col>
+            </Row>
+
+            {/* Other information */}
+            {
+                userInfo &&
+
+                <Row style={{ padding: "1rem" }} justify="center">
+                    <Col xs={24} md={12} xl={12}>
+                        <Row justify="center">
+                            <Title level={3} style={{ textAlign: "center" }}>
+                                Data Fetch from mongodb
+                            </Title>
+
+                        </Row>
+                        <Row>
+                            <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Name: </b>{userInfo?.name}</Text>
+                        </Row>
+                        <Row>
+                            <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Email: </b>{userInfo?.email}</Text>
+                        </Row>
+                        <Row>
+                            <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Phone Number: </b>{userInfo?.mobile}</Text>
+                        </Row>
+                        <Row>
+                            <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Address: </b>{userInfo?.address}</Text>
+                        </Row>
+                        <Row>
+                            <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Age: </b>{userInfo?.age}</Text>
+                        </Row>
                     </Col>
                 </Row>
+            }
 
-                {/* Cards */}
-                <Row gutter={[16, 16]} style={{ padding: "1rem" }}>
-                    <Col xs={24} md={12} xl={6}>
-                        <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Email Address" >
-                            <Text >
-                                {loggedInUserInfo?.email}
-                            </Text>
-                        </Card>
-                    </Col>
-                    <Col xs={24} md={12} xl={6}>
-                        <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Chain Id" >
-                            <Text >
-                                {loggedInUserInfo?.chainId}
-                            </Text>
-                        </Card>
-                    </Col>
-                    <Col xs={24} md={12} xl={6}>
-                        <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Address" >
-                            <Text >
-                                {loggedInUserInfo?.address}
-                            </Text>
-                        </Card>
-                    </Col>
-                    <Col xs={24} md={12} xl={6}>
-                        <Card hoverable style={{ height: 150, borderColor: "#031788" }} title="Private key" >
-                            <Text >
-                                {loggedInUserInfo?.privateKey}
-                            </Text>
-                        </Card>
-                    </Col>
-                </Row>
-
-                {/* Other information */}
-                {
-                    userInfo &&
-
-                    <Row style={{ padding: "1rem" }} justify="center">
-                        <Col xs={24} md={12} xl={12}>
-                            <Row justify="center">
-                                <Title level={3} style={{ textAlign: "center" }}>
-                                    Data Fetch from mongodb
-                                </Title>
-
-                            </Row>
-                            <Row>
-                                <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Name: </b>{userInfo?.name}</Text>
-                            </Row>
-                            <Row>
-                                <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Email: </b>{userInfo?.email}</Text>
-                            </Row>
-                            <Row>
-                                <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Phone Number: </b>{userInfo?.mobile}</Text>
-                            </Row>
-                            <Row>
-                                <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Address: </b>{userInfo?.address}</Text>
-                            </Row>
-                            <Row>
-                                <Text style={{ paddingBottom: "1rem", fontSize: 20 }}><b>Age: </b>{userInfo?.age}</Text>
-                            </Row>
-                        </Col>
-                    </Row>
-                }
-
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer="">
-                    <Form
-                        name="basic"
-                        labelCol={{ span: 8 }}
-                        wrapperCol={{ span: 16 }}
-                        initialValues={{ remember: true }}
-                        onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
-                        autoComplete="off"
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer="">
+                <Form
+                    name="basic"
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 16 }}
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        initialValue={loggedInUserInfo?.email}
+                        rules={[{ required: true, message: 'Please input your email!' }]}
                     >
-                        <Form.Item
-                            label="Email"
-                            name="email"
-                            initialValue={loggedInUserInfo?.email}
-                            rules={[{ required: true, message: 'Please input your email!' }]}
-                        >
-                            <Input disabled />
-                        </Form.Item>
-                        <Form.Item
-                            label="Name"
-                            name="name"
-                            initialValue={loggedInUserInfo?.name}
-                            rules={[{ required: true, message: 'Please input your name!' }]}
-                        >
-                            <Input disabled />
-                        </Form.Item>
-                        <Form.Item
-                            label="Age"
-                            name="age"
-                            rules={[{ required: true, message: 'Please input your age!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Address"
-                            name="address"
-                            rules={[{ required: true, message: 'Please input your address!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
-                        <Form.Item
-                            label="Phone Number"
-                            name="mobile"
-                            rules={[{ required: true, message: 'Please input your mobile!' }]}
-                        >
-                            <Input />
-                        </Form.Item>
+                        <Input disabled />
+                    </Form.Item>
+                    <Form.Item
+                        label="Name"
+                        name="name"
+                        initialValue={loggedInUserInfo?.name}
+                        rules={[{ required: true, message: 'Please input your name!' }]}
+                    >
+                        <Input disabled />
+                    </Form.Item>
+                    <Form.Item
+                        label="Age"
+                        name="age"
+                        rules={[{ required: true, message: 'Please input your age!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Address"
+                        name="address"
+                        rules={[{ required: true, message: 'Please input your address!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Phone Number"
+                        name="mobile"
+                        rules={[{ required: true, message: 'Please input your mobile!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
 
 
-                        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                            <Button type="primary" htmlType="submit" style={{ float: "right" }}>
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Form>
-                </Modal>
-            </>
-        )
-    };
+                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                        <Button type="primary" htmlType="submit" style={{ float: "right" }}>
+                            Submit
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
+        </>
+    )
+
 
     const unLoggedInView = (
         <Row justify="center" style={{ paddingTop: "1rem" }}>
@@ -354,7 +353,7 @@ const App = () => {
                 {
                     web3auth ?
                         <Col span={24}>
-                            {provider ? <LoggedInView /> : unLoggedInView}
+                            {provider ? loggedInView : unLoggedInView}
                         </Col>
                         :
                         <Col span={24}>
