@@ -8,6 +8,7 @@ import { Row, Col, Typography, Button, Spin, Card, Modal, Form, Input } from 'an
 const { Title, Text } = Typography;
 import Image from 'next/image';
 const clientId = process.env.NEXT_PUBLIC_CLIENT_ID ? process.env.NEXT_PUBLIC_CLIENT_ID : "";
+const rpcTarget = process.env.NEXT_PUBLIC_RPC_TARGET ? process.env.NEXT_PUBLIC_RPC_TARGET : "";
 import axios from 'axios';
 type LoggedInUserInfo = {
     name: string | undefined;
